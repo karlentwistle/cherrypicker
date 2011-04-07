@@ -7,9 +7,9 @@
 # puts rapid.host
 # rapid.download
 class Rapidshare
-  attr_accessor :link, :fileid, :filename, :hostname, :username, :password, :size
+  attr_accessor :link, :fileid, :filename, :hostname, :username, :password, :size, :location
 
-  def initialize(link, username, password, size = nil)
+  def initialize(link, username, password, size = nil, location = "")
     @link     = link
     @fileid   = fileid
     @filename = filename
@@ -17,10 +17,11 @@ class Rapidshare
     @username = username
     @password = password
     @size     = size
+    @location = location
   end
   
   def download
-    Download.new(self.hostname, remote_url, self.filename, self.size)
+    Download.new(self.hostname, remote_url, self.filename, self.size, self.location)
   end
   
   def fileid

@@ -29,7 +29,10 @@ Examples
 	
 	check = LinkChecker.new([
 	  "http://rapidshare.com/files/329036215/myfile.rar", 
-	  "http://rapidshare.com/files/329036764/deadfile.rar"]).status	
+	  "http://rapidshare.com/files/329036764/deadfile.rar"]).status
+	
+	test3 = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password", "size", "location")
+	test3.download	
 	
 Contributing
 ------------

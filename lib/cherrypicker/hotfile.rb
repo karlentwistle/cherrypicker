@@ -5,9 +5,9 @@
 # puts hotfile.hostname
 # hotfile.download
 class Hotfile
-  attr_accessor :link, :hostname, :filename, :username, :password, :size
+  attr_accessor :link, :hostname, :filename, :username, :password, :size, :location
 
-  def initialize(link, username, password, size = nil)
+  def initialize(link, username, password, size = nil, location = "")
     if link =~ /hotfile.com\/dl\/\d*\/[0-9a-f]*\/.*.*\.html/
       @link = link[/(.*)\.html/, 1]
     else
@@ -18,10 +18,11 @@ class Hotfile
     @hostname = hostname
     @filename = filename
     @size     = size
+    @location = location
   end
 
   def download
-    Download.new(self.hostname, remote_url, self.filename, self.size)
+    Download.new(self.hostname, remote_url, self.filename, self.size, self.location)
   end
   
   def filename
