@@ -52,7 +52,3 @@ def random_agent
       "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.14) Gecko/20110218 Firefox/3.6.14"]
     @useragent[rand(14)]
 end
-
-
-
-p random_agent
