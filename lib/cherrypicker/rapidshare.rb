@@ -13,7 +13,7 @@ class Rapidshare
     @link     = link
     @fileid   = fileid
     @filename = filename
- #   @hostname = hostname
+    @hostname = hostname
     @username = username
     @password = password
     @size     = size
@@ -47,6 +47,6 @@ class Rapidshare
   
   def hostname
     query = remote_query("http://api.rapidshare.com/cgi-bin/rsapi.cgi?sub=download&" + create_url)
-    query.response.response["Location"][/https:\/\/(.*).rapidshare.com/, 1] + ".rapidshare.com"
+    query.response.response["Location"][/(.*).rapidshare.com/, 1] + ".rapidshare.com"
   end  
 end
