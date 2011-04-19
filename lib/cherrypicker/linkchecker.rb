@@ -12,7 +12,7 @@ class LinkChecker
 
   def initialize(links)
     @links = links
-    if links[0] =~ /^http:\/\/(www.|)rapidshare.com/
+    if links[0] =~ /^http(s|):\/\/(www.|)rapidshare.com/
       @status = rapidshare
     else
       @status = hotfile
