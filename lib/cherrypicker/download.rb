@@ -30,7 +30,7 @@ class Download
     @size = http.request_head(URI.escape(uri.path))['content-length'].to_i if @size.nil?
     http.request(request) do |response|
       bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i)
-      File.open(@location + File.basename(uri.path), "wb") do |file|
+      File.open(@location + (@filename ||= File.basename(uri.path)), "wb") do |file|
         response.read_body do |segment|
           @progress += segment.length
           bar.set(@progress)
