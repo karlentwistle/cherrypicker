@@ -1,3 +1,5 @@
+require 'open-uri'
+
 # Class that can sort Rapidshare link into sections as specified by RapidShare API 
 #
 # rapid = Rapidshare.new("http://rapidshare.com/files/329036215/The.Matrix.bandaa25.part06.rar", "username", "password")
@@ -10,9 +12,10 @@ class Rapidshare
   attr_accessor :link, :fileid, :filename, :hostname, :username, :password, :size, :location
 
   def initialize(link, username, password, size = nil, location = "")
+    uri = URI.parse(link)   
     @link     = link
     @fileid   = fileid
-    @filename = filename
+    @filename = File.basename(uri.path)
     @hostname = hostname
     @username = username
     @password = password
@@ -21,27 +24,23 @@ class Rapidshare
   end
   
   def download
-    Download.new(self.hostname, remote_url, self.filename, self.size, self.location)
+    Download.new(@hostname + remote_url, @location, @size,)
   end
   
   def fileid
-    self.link[/files\/(\d*)\//, 1]
+    @link[/files\/(\d*)\//, 1]
   end
-  
-  def filename
-    self.link[/files\/\d*\/(.*)/, 1]
-  end
-  
+    
   def remote_url
     "/cgi-bin/rsapi.cgi?sub=download&" + create_url
   end
     
   def create_url
    hash_to_url({
-      :fileid  =>   self.fileid,
-      :filename  => self.filename,
-      :login  =>    self.username.to_s,
-      :password  => self.password.to_s
+      :fileid  =>   @fileid,
+      :filename  => @filename,
+      :login  =>    @username.to_s,
+      :password  => @password.to_s
     })
   end
   

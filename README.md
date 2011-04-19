@@ -31,8 +31,11 @@ Examples
 	  "http://rapidshare.com/files/329036215/myfile.rar", 
 	  "http://rapidshare.com/files/329036764/deadfile.rar"]).status
 	
-	test3 = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password", "size", "location")
+	test3 = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password", "size", "/location/tosave/file/")
 	test3.download	
+	
+	Download.new("http://download.thinkbroadband.com/10MB.zip", "/location/tosave/file/")
+	Download.new("http://download.thinkbroadband.com/10MB.zip", "/location/tosave/file/", "10485760")
 	
 Contributing
 ------------
