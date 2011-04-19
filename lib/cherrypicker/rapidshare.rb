@@ -24,7 +24,7 @@ class Rapidshare
   end
   
   def download
-    Download.new(@hostname + remote_url, @location, @size,)
+    Download.new(@hostname + remote_url, @location, @size, @filename)
   end
   
   def fileid

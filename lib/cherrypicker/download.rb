@@ -9,12 +9,13 @@ require 'progressbar'
 require 'open-uri'
 
 class Download
-  attr_accessor :link, :size, :location, :progress
+  attr_accessor :link, :size, :location, :progress, :filename
   
-  def initialize(link, location = nil, size = nil)
+  def initialize(link, location = nil, size = nil, filename = nil)
     @link     = link
     @size     = size
     @location = location
+    @filename = filename
     @progress = 0
  
     download_file
@@ -28,7 +29,7 @@ class Download
     request.initialize_http_header({"User-Agent" => random_agent})
     @size = http.request_head(URI.escape(uri.path))['content-length'].to_i if @size.nil?
     http.request(request) do |response|
-      bar = ProgressBar.new(File.basename(uri.path), @size.to_i)
+      bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i)
       File.open(@location + File.basename(uri.path), "wb") do |file|
         response.read_body do |segment|
           @progress += segment.length
