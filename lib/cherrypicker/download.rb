@@ -27,14 +27,26 @@ class Download
     http.use_ssl = true if uri.scheme == "https"
     request = Net::HTTP::Get.new(uri.request_uri)
     request.initialize_http_header({"User-Agent" => random_agent})
-    @size = http.request_head(URI.escape(uri.path))['content-length'].to_i if @size.nil?
-    http.request(request) do |response|
-      bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i)
-      File.open(@location + (@filename ||= File.basename(uri.path)), "wb") do |file|
-        response.read_body do |segment|
-          @progress += segment.length
-          bar.set(@progress)
-          file.write(segment)
+    @size = http.request_head(URI.escape(uri.path))['content-length'] if @size.nil?
+    #no content-length no progress bar
+    if @size.nil? || uri.host == "av.vimeo.com" #catch vimeo
+      http.request(request) do |response|
+        File.open(@location + (@filename ||= File.basename(uri.path)), "wb") do |file|
+          response.read_body do |segment|
+            @progress += segment.length
+            file.write(segment)
+          end
+        end
+      end
+    else
+      http.request(request) do |response|
+        bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i)
+        File.open(@location + (@filename ||= File.basename(uri.path)), "wb") do |file|
+          response.read_body do |segment|
+            @progress += segment.length
+            bar.set(@progress)
+            file.write(segment)
+          end
         end
       end
     end

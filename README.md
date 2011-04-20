@@ -2,9 +2,9 @@ Cherrypicker
 =========
 
 	Cherrypicker was part of my final year project for university it
-	is a Ruby Gem that lets you download from; Rapidshare or Hotfile
+	is a Ruby Gem that lets you download from; Rapidshare, Hotfile and Vimeo
 	You can also utilise the LinkChecker to see if your files are 
-	alive on Rapidshare or Hotfile
+	alive on Rapidshare and Hotfile
 	
 	Enjoy!
 
@@ -33,6 +33,8 @@ Examples
 	
 	test3 = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password", "size", "/location/tosave/file/")
 	test3.download	
+	
+	Vimeo.new("http://www.vimeo.com/2119458", "/Volumes/Storage/Desktop/cherrytest/").download
 	
 	Download.new("http://download.thinkbroadband.com/10MB.zip", "/location/tosave/file/")
 	Download.new("http://download.thinkbroadband.com/10MB.zip", "/location/tosave/file/", "10485760")
