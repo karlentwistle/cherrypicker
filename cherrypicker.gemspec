@@ -20,4 +20,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_dependency('progressbar', '~> 0.9')
+  s.add_dependency('hpricot', '~> hpricot-0.8.4')
+  
 end
