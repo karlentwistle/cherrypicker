@@ -19,7 +19,5 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   
-  s.add_dependency('progressbar', '~> 0.9')
-  s.add_dependency('hpricot', '~> hpricot-0.8.4')
-  
+  s.add_dependency('progressbar', '~> 0.9')  
 end
