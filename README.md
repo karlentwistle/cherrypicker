@@ -31,13 +31,13 @@ Examples
 	  "http://rapidshare.com/files/329036215/myfile.rar", 
 	  "http://rapidshare.com/files/329036764/deadfile.rar"]).status
 	
-	test3 = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password", "size", "/location/tosave/file/")
+	test3 = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password", :size => 10000, :location => "/location/tosave/file/")
 	test3.download	
 	
-	Vimeo.new("http://www.vimeo.com/2119458", "/Volumes/Storage/Desktop/cherrytest/").download
+	Vimeo.new("http://www.vimeo.com/2119458", :location => "/Volumes/Storage/Desktop/cherrytest/").download
 	
-	Download.new("http://download.thinkbroadband.com/10MB.zip", "/location/tosave/file/")
-	Download.new("http://download.thinkbroadband.com/10MB.zip", "/location/tosave/file/", "10485760")
+	Download.new("http://download.thinkbroadband.com/10MB.zip", :location => "/location/tosave/file/")
+	Download.new("http://download.thinkbroadband.com/10MB.zip", :location => "/location/tosave/file/", :size => 10485760)
 	
 Contributing
 ------------
@@ -51,15 +51,15 @@ guidelines:
 Limitations
 -----------
 
-1. 	The download function is only useful if you're using premium accounts, 
+1. 	The download function for cyberlockers is only useful if you're using premium accounts, 
 	this will not work without a valid username and password when downloading a file
 	
 2. 	The linkchecker is subject to throttling from both Hotfile and Rapidshare 
-	so don't abuse it
+	so don't abuse it or your IP address could get banned
 	
 3. 	I frequently have problems accessing file hosting sites because one of their 
 	files has been included on the IWF list and the ISP IWF filtering screws things up. 
-	(Im on Virgin Media)
+	(Im on Virgin Media UK)
 	
 License
 -------

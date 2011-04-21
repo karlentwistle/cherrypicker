@@ -1,5 +1,5 @@
 # Class that can download from Vimeo
-# Vimeo.new("http://www.vimeo.com/2119458", "/Volumes/Storage/Desktop/cherrytest/").download
+# Vimeo.new("http://www.vimeo.com/2119458", :location => "/Volumes/Storage/Desktop/cherrytest/").download
 
 #<!--     _
 #  __   _|_|_ __ ___   ___  ___
@@ -12,10 +12,15 @@
 class Vimeo
   attr_accessor :link, :filename, :location, :download_url
 
-  def initialize(link, location = "")
+  def initialize(link, opts={})
+    
+    o = {
+      :location => nil,
+    }.merge(opts)
+    
     @link         = link
     @filename     = ""
-    @location     = location
+    @location     = o[:location]
     @download_url = ""
     
     hostname = "http://www.vimeo.com/moogaloop/play/clip"
@@ -40,6 +45,6 @@ class Vimeo
   end
   
   def download
-    Download.new(@download_url, @location)
+    Download.new(@download_url, :location => @location)
   end
 end
