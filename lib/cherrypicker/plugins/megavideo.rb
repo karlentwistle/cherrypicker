@@ -37,56 +37,56 @@ class Megavideo
     
   def decrypt(un,k1,k2) #credit http://userscripts.org/scripts/review/42944
     k1 = k1.to_i
-  	k2 = k2.to_i
+    k2 = k2.to_i
 
-		#convert the hex "un" to binary
-		location1 = Array.new
-		un.each_char do |char|
-			#puts "#{char} => #{char.to_i(16).to_s(2)}"
-			location1 << ("000" + char.to_i(16).to_s(2))[-4,4]
-		end
-
-  	location1 = location1.join("").split("")
-
-		location6 = Array.new
-		0.upto(383) do |n|
-        k1 = (k1 * 11 + 77213) % 81371
-		    k2 = (k2 * 17 + 92717) % 192811
-		    location6[n] = (k1 + k2) % 128
-		end
-	
-  	location3 = Array.new
-		location4 = Array.new
-		location5 = Array.new
-		location8 = Array.new
-	
-  	256.downto(0) do |n|
-  	  location5 = location6[n]
-  		location4 = n % 128		
-  		location8 = location1[location5]
-  		location1[location5] = location1[location4]
-  		location1[location4] = location8
+    #convert the hex "un" to binary
+    location1 = Array.new
+    un.each_char do |char|
+      #puts "#{char} => #{char.to_i(16).to_s(2)}"
+      location1 << ("000" + char.to_i(16).to_s(2))[-4,4]
     end
 
-		0.upto(127) do |n|
-			location1[n] = location1[n].to_i ^ location6[n+256] & 1
-		end
+    location1 = location1.join("").split("")
 
-		location12 = location1.join("")
-		location7 = Array.new
+    location6 = Array.new
+    0.upto(383) do |n|
+      k1 = (k1 * 11 + 77213) % 81371
+      k2 = (k2 * 17 + 92717) % 192811
+      location6[n] = (k1 + k2) % 128
+    end
 
-		n = 0
-		while (n < location12.length) do
-			location9 = location12[n,4]
-			location7 << location9
-			n+=4
-		end
+    location3 = Array.new
+    location4 = Array.new
+    location5 = Array.new
+    location8 = Array.new
 
-		result = ""
-		location7.each do |bin|
-			result = result + bin.to_i(2).to_s(16)
-		end
-		result
+    256.downto(0) do |n|
+      location5 = location6[n]
+      location4 = n % 128		
+      location8 = location1[location5]
+      location1[location5] = location1[location4]
+      location1[location4] = location8
+    end
+
+    0.upto(127) do |n|
+      location1[n] = location1[n].to_i ^ location6[n+256] & 1
+    end
+
+    location12 = location1.join("")
+    location7 = Array.new
+
+    n = 0
+    while (n < location12.length) do
+      location9 = location12[n,4]
+      location7 << location9
+      n+=4
+    end
+
+    result = ""
+    location7.each do |bin|
+      result = result + bin.to_i(2).to_s(16)
+    end
+    result
   end
     
   def download

@@ -2,7 +2,7 @@ Cherrypicker
 =========
 
 	Cherrypicker was part of my final year project for university it
-	is a Ruby Gem that lets you download from; Rapidshare, Hotfile, Youtube and Vimeo
+	is a Ruby Gem that lets you download from; Rapidshare, Hotfile, Hotfile, Youtube, Vimeo &#38; Megavideo
 	You can also utilise the LinkChecker to see if your files are 
 	alive on Rapidshare and Hotfile
 	
