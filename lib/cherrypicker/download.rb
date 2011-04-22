@@ -20,7 +20,7 @@ class Download
     
     @link = link
     @size = o[:size]
-    @location = o[:location]
+    @location = o[:location] ||= ""
     @filename = o[:filename]
     @progress = 0
     @finished = false 
