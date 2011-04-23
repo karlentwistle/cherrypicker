@@ -34,7 +34,7 @@ module Cherrypicker
     end
   
     def create_url
-      hash_to_url({
+      Cherrypicker::hash_to_url({
         :link  =>  @link,
         :username  =>  @username.to_s,
         :password  =>  @password.to_s,
@@ -42,7 +42,7 @@ module Cherrypicker
     end
   
     def download_url
-      remote_query("http://api.hotfile.com/?action=getdirectdownloadlink&" + create_url).response.body.gsub(/\n/,'')
+      Cherrypicker::remote_query("http://api.hotfile.com/?action=getdirectdownloadlink&" + create_url).response.body.gsub(/\n/,'')
     end
   end
 end

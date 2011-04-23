@@ -38,7 +38,7 @@ module Cherrypicker
     end
     
     def create_url
-     hash_to_url({
+     Cherrypicker::hash_to_url({
         :fileid  =>   @fileid,
         :filename  => @filename,
         :login  =>    @username.to_s,
@@ -47,7 +47,7 @@ module Cherrypicker
     end
   
     def hostname
-      query = remote_query("http://api.rapidshare.com/cgi-bin/rsapi.cgi?sub=download&" + create_url)
+      query = Cherrypicker::remote_query("http://api.rapidshare.com/cgi-bin/rsapi.cgi?sub=download&" + create_url)
       query.response.response["Location"][/(.*).rapidshare.com/, 1] + ".rapidshare.com"
     end  
   end

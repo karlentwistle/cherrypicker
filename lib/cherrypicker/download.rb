@@ -33,7 +33,7 @@ module Cherrypicker
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == "https"
       request = Net::HTTP::Get.new(uri.request_uri)
-      request.initialize_http_header({"User-Agent" => random_agent})
+      request.initialize_http_header({"User-Agent" => Cherrypicker::random_agent})
       unless (uri.host.include? 'youtube.com') && (uri.request_uri.include? 'videoplayback') #youtube throws EOFError
         head = http.request_head(URI.escape(uri.path))
         case head

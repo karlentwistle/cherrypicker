@@ -1,7 +1,7 @@
 # Class that can download from Vimeo
 # Youtube.new("http://www.youtube.com/watch?v=SF6I5VSZVqc", :location => "/Volumes/Storage/Desktop/cherrytest/").download
+require 'cgi'
 
-require "cgi"
 module Cherrypicker
   class Youtube
     attr_accessor :link, :filename, :location, :download_url
@@ -18,7 +18,7 @@ module Cherrypicker
       @download_url = ""
     
   		video_id = @link[/v[\/=](.*)/,1]
-      video_info = remote_query("http://www.youtube.com/get_video_info?video_id=#{video_id}").body
+      video_info = Cherrypicker::remote_query("http://www.youtube.com/get_video_info?video_id=#{video_id}").body
     
   		#converting the huge infostring into a hash. simply by splitting it at the & and then splitting it into key and value arround the =
   		#credit https://github.com/rb2k/viddl-rb/blob/master/plugins/youtube.rb

@@ -3,8 +3,9 @@
 require 'net/http'
 require 'net/https'
 require 'open-uri'
+
 module Cherrypicker
-  def remote_query(url)  
+  def self.remote_query(url)  
     begin
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
@@ -26,14 +27,14 @@ module Cherrypicker
     end
   end
 
-  def hash_to_url(hash)
+  def self.hash_to_url(hash)
     hash.keys.inject('') do |query_string, key|
       query_string << '&' unless key == hash.keys.first
       query_string << "#{URI.encode(key.to_s)}=#{URI.encode(hash[key])}"
     end
   end
 
-  def random_agent
+  def self.random_agent
     @useragent = ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.50 Safari/534.24"]
     return @useragent[0]
   end

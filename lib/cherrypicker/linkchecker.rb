@@ -31,13 +31,13 @@ module Cherrypicker
       end
 
       query = "http://api.rapidshare.com/cgi-bin/rsapi.cgi?sub=checkfiles&" + 
-      hash_to_url({
+      Cherrypicker::hash_to_url({
         :files  =>      files.join(","),
         :filenames  =>  filenames.join(","),
         :incmd5  =>     '0'
       })
 
-      check = remote_query(query).body.split("\n")
+      check = Cherrypicker::remote_query(query).body.split("\n")
     
       #"452966383,ROT007-WEB-2011.rar,23635847,23,1,tl2,0"  
       check.each_with_index do |c, index|
@@ -48,7 +48,7 @@ module Cherrypicker
         else 
           status = "Dead"
         end
-        singlelinks << SingleLink.new(links[index], "#{status}", size)
+        singlelinks << Cherrypicker::SingleLink.new(links[index], "#{status}", size)
       end
 
       links = {}
@@ -71,7 +71,7 @@ module Cherrypicker
         keys << Regexp.last_match(2)
       end
     
-      query = "http://api.hotfile.com/?action=checklinks&" + 
+      Cherrypicker::query = "http://api.hotfile.com/?action=checklinks&" + 
       hash_to_url({
         :links  =>   links.join(","),
         :id  =>      ids.join(","),
@@ -79,7 +79,7 @@ module Cherrypicker
         :files  =>  "id,status,size"
       })
     
-      check = remote_query(query).body.split("\n")
+      check = Cherrypicker::remote_query(query).body.split("\n")
     
       unless check.size == 0
         #"111044909,1,Playaz-Sub_Zero-PLAYAZ015-WEB-2011-EGM.rar "  
@@ -92,11 +92,11 @@ module Cherrypicker
           else
             status = "Dead"
           end
-          singlelinks << SingleLink.new(links[index], "#{status}", size)
+          singlelinks << Cherrypicker::SingleLink.new(links[index], "#{status}", size)
         end
       else
         links.each do |link|
-          singlelinks << SingleLink.new(link, "Dead", nil)
+          singlelinks << Cherrypicker::SingleLink.new(link, "Dead", nil)
         end
       end
 

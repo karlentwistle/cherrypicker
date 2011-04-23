@@ -1,4 +1,3 @@
-include Cherrypicker
 require 'open-uri'
 
 module Cherrypicker
@@ -17,8 +16,9 @@ module Cherrypicker
       @password     = o[:password]
       @directory    = o[:location]
 
-      host = URI.parse(@link.to_s).host[/[^www\.]+/].capitalize
-      Cherrypicker::host.new(@link, :location => @location, :username => @username, :password => @password)
+      classname = URI.parse(@link.to_s).host[/[^www\.]+/].capitalize
+      instance = Object.const_get('Cherrypicker').const_get("#{classname}")
+      instance.new(@link, :location => @location, :username => @username, :password => @password).download
     end
   end
 end

@@ -27,7 +27,7 @@ module Cherrypicker
     
       #the vimeo ID consists of decimal numbers in the URL
   	  vimeo_id = @link[/\d+/]
-      response = remote_query("http://www.vimeo.com/moogaloop/load/clip:#{vimeo_id}")
+      response = Cherrypicker::remote_query("http://www.vimeo.com/moogaloop/load/clip:#{vimeo_id}")
       title = response.body[/<caption>(.*)<\/caption>/, 1] 
       request_signature = response.body[/<request_signature>(.*)<\/request_signature>/, 1] 
       request_signature_expires = response.body[/<request_signature_expires>(\d+)<\/request_signature_expires>/, 1]	
@@ -40,7 +40,7 @@ module Cherrypicker
       end
     
   		@filename = title.delete("\"'").gsub(/[^0-9A-Za-z]/, '_') + ".flv"
-      reply = remote_query("#{hostname}#{download_url}")
+      reply = Cherrypicker::remote_query("#{hostname}#{download_url}")
   		@download_url = reply.response['location']
     end
   
