@@ -1,14 +1,14 @@
 #!/usr/bin/ruby
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'cherrypicker'
+require "getoptlong"
+require 'pathname'
 
 def usage()
 	puts "Cherrypicker lets you download from; Rapidshare, Hotfile, Hotfile, Youtube, Vimeo & Megavideo"
-	puts 
-	puts "Usage: cherrypick link directory [--username|-u] [--password|-p]"
+	puts "Usage: cherrypick link [--directory|-d] [--username|-u] [--password|-p]"
 	puts
 	puts "example: cherrypick http://www.youtube.com/watch?v=I5DCwN28y8o ~/Movies"
-	puts
 	puts "example: cherrypick http://rapidshare.com/files/453165880/test_file.txt -u karlentwistle -p foobar"
 end
 
@@ -17,4 +17,57 @@ if not ARGV[0]
 	exit
 end
 
-#Cherrypick.new(ARGV)
+path = Pathname.new(ARGV[0]) 
+
+if not path.directory?   
+	puts "Sorry directory not found " + path	
+	usage 
+	exit
+end
+
+parser = GetoptLong.new 
+parser.set_options(
+  ["-d", "--directory", GetoptLong::OPTIONAL_ARGUMENT],
+	["-u", "--username", GetoptLong::OPTIONAL_ARGUMENT], 
+	["-p", "--password", GetoptLong::OPTIONAL_ARGUMENT]
+) 
+
+username  = ""
+password  = ""
+directory = ""
+
+loop do 
+	opt, arg = parser.get
+	break if not opt
+	
+	case opt
+		when '-u'
+      if arg == ''
+        username = nil
+      else
+        username = arg
+      end
+		when "-p" 
+		  if arg == ''
+        password = nil
+      else
+        password = arg
+      end
+	  end
+	  when "-d" 
+		  if arg == ''
+        directory = nil
+      else
+        if not path.directory?   
+        	puts "Sorry directory not found " + path	
+        	usage 
+        	exit
+        else
+          directory = arg
+        end
+      end
+	  end
+  end
+end
+
+Cherrypick.new(ARGV[0], :directory => directory, :username => username, :password => password)

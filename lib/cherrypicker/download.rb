@@ -7,52 +7,53 @@ require 'net/http'
 require 'net/https'
 require 'progressbar'
 require 'open-uri'
-
-class Download
-  attr_accessor :link, :size, :location, :progress, :filename, :finished
+module Cherrypicker
+  class Download
+    attr_accessor :link, :size, :location, :progress, :filename, :finished
   
-  def initialize(link, opts={})
-    o = {
-      :location => nil,
-      :size => nil,
-      :filename => nil
-    }.merge(opts)
+    def initialize(link, opts={})
+      o = {
+        :location => nil,
+        :size => nil,
+        :filename => nil
+      }.merge(opts)
     
-    @link = link
-    @size = o[:size]
-    @location = o[:location] ||= ""
-    @filename = o[:filename]
-    @progress = 0
-    @finished = false 
+      @link = link
+      @size = o[:size]
+      @location = o[:location] ||= ""
+      @filename = o[:filename]
+      @progress = 0
+      @finished = false 
     
-    download_file
-  end
-
-  def download_file
-    uri = URI.parse(@link.to_s)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true if uri.scheme == "https"
-    request = Net::HTTP::Get.new(uri.request_uri)
-    request.initialize_http_header({"User-Agent" => random_agent})
-    unless (uri.host.include? 'youtube.com') && (uri.request_uri.include? 'videoplayback') #youtube throws EOFError
-      head = http.request_head(URI.escape(uri.path))
-      case head
-      when Net::HTTPForbidden
-        @size = nil  #no content-length no progress bar
-      else
-        @size = head['content-length'] if @size.nil? && head['content-length'].to_i > 1024
-      end
+      download_file
     end
-    http.request(request) do |response|
-      bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i) unless @size.nil?
-      File.open(@location + (@filename ||= File.basename(uri.path)), "wb") do |file|
-        response.read_body do |segment|
-          @progress += segment.length
-          bar.set(@progress) unless @size.nil?
-          file.write(segment)
+
+    def download_file
+      uri = URI.parse(@link.to_s)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true if uri.scheme == "https"
+      request = Net::HTTP::Get.new(uri.request_uri)
+      request.initialize_http_header({"User-Agent" => random_agent})
+      unless (uri.host.include? 'youtube.com') && (uri.request_uri.include? 'videoplayback') #youtube throws EOFError
+        head = http.request_head(URI.escape(uri.path))
+        case head
+        when Net::HTTPForbidden
+          @size = nil  #no content-length no progress bar
+        else
+          @size = head['content-length'] if @size.nil? && head['content-length'].to_i > 1024
         end
       end
+      http.request(request) do |response|
+        bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i) unless @size.nil?
+        File.open(@location + (@filename ||= File.basename(uri.path)), "wb") do |file|
+          response.read_body do |segment|
+            @progress += segment.length
+            bar.set(@progress) unless @size.nil?
+            file.write(segment)
+          end
+        end
+      end
+      @finished = true
     end
-    @finished = true
   end
 end
