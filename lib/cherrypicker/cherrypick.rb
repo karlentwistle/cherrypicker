@@ -1,4 +1,4 @@
-#include Cherrypicker
+include Cherrypicker
 require 'open-uri'
 
 module Cherrypicker
