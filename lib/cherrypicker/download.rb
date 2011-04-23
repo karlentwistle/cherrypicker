@@ -3,10 +3,12 @@
 # Download.new("http://download.thinkbroadband.com/10MB.zip", :location => '/location/tosave/file/') 
 # Download.new("http://download.thinkbroadband.com/10MB.zip", :location => '/location/tosave/file/', :size => 10485760)
 
+require 'rubygems'
 require 'net/http'
 require 'net/https'
 require 'progressbar'
 require 'open-uri'
+
 module Cherrypicker
   class Download
     attr_accessor :link, :size, :location, :progress, :filename, :finished

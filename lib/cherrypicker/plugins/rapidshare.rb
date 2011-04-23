@@ -7,17 +7,19 @@ module Cherrypicker
   class Rapidshare
     attr_accessor :link, :fileid, :filename, :hostname, :username, :password, :size, :location
   
-    def initialize(link, username, password, opts={})
+    def initialize(link, opts={})
       uri = URI.parse(link)
     
       o = {
         :location => nil,
         :size => nil,
+        :username => nil,
+        :password => nil,
       }.merge(opts)
     
       @link     = link
-      @username = username
-      @password = password
+      @username = o[:username]
+      @password = o[:password]
       @fileid   = fileid
       @size     = o[:size]
       @location = o[:location]

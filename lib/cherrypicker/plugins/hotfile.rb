@@ -8,7 +8,7 @@ module Cherrypicker
   class Hotfile
     attr_accessor :link, :hostname, :filename, :username, :password, :size, :location, :query
   
-    def initialize(link, username, password, opts={})
+    def initialize(link, opts={})
       if link =~ /hotfile.com\/dl\/\d*\/[0-9a-f]*\/.*.*\.html/
         @link = link[/(.*)\.html/, 1] #remove .html from link
       else
@@ -20,10 +20,12 @@ module Cherrypicker
       o = {
         :location => nil,
         :size => nil,
+        :username => nil,
+        :password => nil,
       }.merge(opts)
     
-      @username = username
-      @password = password
+      @username = o[:username]
+      @password = o[:password]
       @size     = o[:size]
       @location = o[:location]
       @filename = File.basename(uri.path)
