@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'cherrypicker'
-require "getoptlong"
+require 'getoptlong'
 require 'pathname'
 
 def usage()
@@ -17,57 +17,45 @@ if not ARGV[0]
 	exit
 end
 
-path = Pathname.new(ARGV[0]) 
-
-if not path.directory?   
-	puts "Sorry directory not found " + path	
-	usage 
-	exit
-end
-
 parser = GetoptLong.new 
 parser.set_options(
-  ["-d", "--directory", GetoptLong::OPTIONAL_ARGUMENT],
-	["-u", "--username", GetoptLong::OPTIONAL_ARGUMENT], 
-	["-p", "--password", GetoptLong::OPTIONAL_ARGUMENT]
+  ["-d", "--directory", GetoptLong::REQUIRED_ARGUMENT],
+	["-u", "--username", GetoptLong::REQUIRED_ARGUMENT], 
+	["-p", "--password", GetoptLong::REQUIRED_ARGUMENT]
 ) 
 
-username  = ""
-password  = ""
+username = ""
+password = ""
 directory = ""
 
 loop do 
+
 	opt, arg = parser.get
 	break if not opt
 	
 	case opt
-		when '-u'
-      if arg == ''
-        username = nil
-      else
-        username = arg
-      end
-		when "-p" 
-		  if arg == ''
-        password = nil
-      else
-        password = arg
-      end
-	  end
-	  when "-d" 
-		  if arg == ''
-        directory = nil
-      else
-        if not path.directory?   
-        	puts "Sorry directory not found " + path	
-        	usage 
-        	exit
-        else
-          directory = arg
-        end
-      end
-	  end
+		when "-u"
+			username = arg
+		when "-p"
+			password = arg
+		when "-d"
+		  directory = arg
+	end
+		
+end
+
+unless directory == "" || nil?
+  p path = Pathname.new(directory) 
+
+  if not path.directory?
+  	puts "Directory not found " + path.to_s
+  	usage 
+  	exit
   end
 end
 
-Cherrypick.new(ARGV[0], :directory => directory, :username => username, :password => password)
+username = nil unless username != ""
+password = nil unless password != ""
+directory = nil unless directory != ""
+
+Cherrypicker::Cherrypick.new(ARGV[0], :location => directory, :username => username, :password => password)

@@ -3,11 +3,11 @@ require 'open-uri'
 
 module Cherrypicker
   class Cherrypick
-    attr_accessor :link, :directory, :username, :password
+    attr_accessor :link, :location, :username, :password
 
     def initialize(link, opts={})
       o = {
-        :directory => nil, 
+        :location => nil, 
         :username  => nil,
         :password  => nil,
       }.merge(opts)
@@ -15,10 +15,10 @@ module Cherrypicker
       @link         = link
       @username     = o[:username]
       @password     = o[:password]
-      @directory    = o[:directory]
+      @directory    = o[:location]
 
       host = URI.parse(@link.to_s).host[/[^www\.]+/].capitalize
-      Cherrypicker::host.new(@link, :location => @directory, :username => @username, :password => @password)
+      Cherrypicker::host.new(@link, :location => @location, :username => @username, :password => @password)
     end
   end
 end
