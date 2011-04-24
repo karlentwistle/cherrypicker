@@ -28,6 +28,7 @@ parser.each{|opt, arg| options[opt.gsub('--', '').to_sym] = arg unless arg == ''
 
 if options[:directory] && !File.directory?(options[:directory]) then
   puts "Directory not found " + options[:directory]
+  puts
   usage 
   exit
 end

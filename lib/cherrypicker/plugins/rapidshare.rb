@@ -5,7 +5,7 @@
 require 'open-uri'
 module Cherrypicker
   class Rapidshare
-    attr_accessor :link, :fileid, :filename, :hostname, :username, :password, :size, :location
+    attr_accessor :link, :fileid, :filename, :hostname, :username, :password, :size, :location, :download_url
   
     def initialize(link, opts={})
       uri = URI.parse(link)
@@ -25,6 +25,7 @@ module Cherrypicker
       @location = o[:location]
       @filename = File.basename(uri.path)
       @hostname = hostname
+      @download_url = @hostname + remote_url
     end
   
     def download
