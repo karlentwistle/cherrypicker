@@ -1,6 +1,6 @@
 # Class that can sort Rapidshare link into sections as specified by RapidShare API 
 #
-# rapid = Rapidshare.new("http://rapidshare.com/files/329036215/The.Matrix.bandaa25.part06.rar", "username", "password")
+# rapid = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password")
 # rapid.download
 require 'open-uri'
 module Cherrypicker

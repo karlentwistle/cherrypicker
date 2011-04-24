@@ -1,6 +1,6 @@
 # Class that can sort Hotfile link into sections as specified by Hotfile API 
 #
-# hotfile = Hotfile.new("http://hotfile.com/dl/110589431/6ad2666/ROT007-WEB-2011.rar.html", "username", "password")
+# hotfile = Hotfile.new("http://hotfile.com/dl/110589431/6ad2666/ROT007-WEB-2011.rar.html", :username => "username", password => "password")
 # hotfile.download
 
 require 'open-uri'
