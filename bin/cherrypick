@@ -27,7 +27,7 @@ parser.set_options(*options.keys.map{|opt| ["--#{opt.to_s}", "-#{opt.to_s[0]}", 
 parser.each{|opt, arg| options[opt.gsub('--', '').to_sym] = arg unless arg == ''}
 
 if options[:directory] && !File.directory?(options[:directory]) then
-  puts "Directory not found " + directory
+  puts "Directory not found " + options[:directory]
   usage 
   exit
 end
