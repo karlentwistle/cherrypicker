@@ -18,9 +18,18 @@ Usage
 
 	require 'cherrypicker'
 	
-Examples
+Terminal Examples
 --------
+	Within your terminal type
+	
+	cherrypick
 
+	cherrypick http://www.youtube.com/watch?v=I5DCwN28y8o -d "~/Movies"
+	cherrypick http://rapidshare.com/files/453165880/test_file.txt -u "karlentwistle" -p "foobar"
+
+	
+Gem Examples
+--------
 	test = Rapidshare.new("http://rapidshare.com/files/329036215/myfile.rar", "username", "password")
 	test.download
 	

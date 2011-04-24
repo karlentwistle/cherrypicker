@@ -5,7 +5,7 @@ require 'getoptlong'
 require 'pathname'
 
 def usage()
-	puts "Cherrypicker lets you download from; Rapidshare, Hotfile, Hotfile, Youtube, Vimeo & Megavideo"
+	puts "Cherrypicker lets you download from; Rapidshare, Hotfile, Youtube, Vimeo & Megavideo"
 	puts "Usage: cherrypick link [--directory|-d] [--username|-u] [--password|-p]"
 	puts
 	puts "example: cherrypick http://www.youtube.com/watch?v=I5DCwN28y8o -d \"~/Movies\""
@@ -17,45 +17,19 @@ if not ARGV[0]
 	exit
 end
 
+#refactored by Hamac credit http://is.gd/sbxAwG
+options = {username: nil, password: nil, directory: nil}
+
 parser = GetoptLong.new 
-parser.set_options(
-  ["-d", "--directory", GetoptLong::REQUIRED_ARGUMENT],
-	["-u", "--username", GetoptLong::REQUIRED_ARGUMENT], 
-	["-p", "--password", GetoptLong::REQUIRED_ARGUMENT]
+parser.set_options(*options.keys.map{|opt| ["--#{opt.to_s}", "-#{opt.to_s[0]}", GetoptLong::REQUIRED_ARGUMENT]}
 ) 
 
-username = ""
-password = ""
-directory = ""
+parser.each{|opt, arg| options[opt.gsub('--', '').to_sym] = arg unless arg == ''}
 
-loop do 
-
-	opt, arg = parser.get
-	break if not opt
-	
-	case opt
-		when "-u"
-			username = arg
-		when "-p"
-			password = arg
-		when "-d"
-		  directory = arg
-	end
-		
+if options[:directory] && !File.directory?(options[:directory]) then
+  puts "Directory not found " + directory
+  usage 
+  exit
 end
-
-unless directory == "" || nil?
-  p path = Pathname.new(directory) 
-
-  if not path.directory?
-  	puts "Directory not found " + path.to_s
-  	usage 
-  	exit
-  end
-end
-
-username = nil unless username != ""
-password = nil unless password != ""
-directory = nil unless directory != ""
-
-Cherrypicker::Cherrypick.new(ARGV[0], :location => directory, :username => username, :password => password)
+s
+Cherrypicker::Cherrypick.new(ARGV[0], :location => options[:directory], :username => options[:username], :password => options[:password])
