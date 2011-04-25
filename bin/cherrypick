@@ -33,4 +33,13 @@ if options[:directory] && !File.directory?(options[:directory]) then
   exit
 end
 
+if ARGV[0].include?("rapidshare.com/files/") or ARGV[0].include?("hotfile.com/dl/")
+  unless options[:username] and options[:password] != nil?
+    puts "Host required username / password" 
+    puts 
+    usage
+    exit
+  end
+end
+
 Cherrypicker::Cherrypick.new(ARGV[0], :location => options[:directory], :username => options[:username], :password => options[:password])
