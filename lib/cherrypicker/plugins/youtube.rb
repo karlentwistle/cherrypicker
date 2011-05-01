@@ -60,6 +60,7 @@ module Cherrypicker
       download_url = video_info_hash["fmt_url_map"][formats.first]
   		@filename = video_info_hash["title"].delete("\"'").gsub(/[^0-9A-Za-z]/, '_') + "." + format_ext[formats.first].first
   		
+  		#there might be a redirect let check
   		reply = Cherrypicker::remote_query("#{download_url}")
   		if reply.response['location']
   		  @download_url = reply.response['location']

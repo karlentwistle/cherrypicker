@@ -20,7 +20,7 @@ module Cherrypicker
           sleep 60  # seconds
         end
       end
-      return response
+      
     rescue SocketError
       $stderr.print "IO failed: " + $!
       raise

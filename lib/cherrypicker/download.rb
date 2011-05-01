@@ -38,7 +38,7 @@ module Cherrypicker
       request.initialize_http_header({"User-Agent" => Cherrypicker::random_agent})
       unless (uri.host.include? 'youtube.com') && (uri.request_uri.include? 'videoplayback') #youtube throws EOFError
         head = http.request_head(URI.escape(uri.path))
-        case head
+      case head
         when Net::HTTPForbidden
           @size = nil  #no content-length no progress bar
         else
