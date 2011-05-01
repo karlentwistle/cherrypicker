@@ -29,7 +29,7 @@ module Cherrypicker
     
       download_file
     end
-
+    
     def download_file
       uri = URI.parse(@link.to_s)
       http = Net::HTTP.new(uri.host, uri.port)

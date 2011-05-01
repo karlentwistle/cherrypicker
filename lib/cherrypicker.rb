@@ -7,3 +7,4 @@ require 'cherrypicker/plugins/rapidshare'
 require 'cherrypicker/plugins/hotfile'
 require 'cherrypicker/plugins/youtube'
 require 'cherrypicker/plugins/megavideo'
+require "cherrypicker/plugins/rghost"
