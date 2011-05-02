@@ -90,7 +90,7 @@ module Cherrypicker
     end
     
     def download
-      Download.new(@download_url, :location => @location, :size => @size)
+      Cherrypicker::download_file(@download_url, :location => @location, :size => @size)
     end
   end
 end

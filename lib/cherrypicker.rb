@@ -1,5 +1,4 @@
 require 'cherrypicker/cherrypick'
-require 'cherrypicker/download'
 require 'cherrypicker/linkchecker'
 require 'cherrypicker/helpers'
 require 'cherrypicker/plugins/vimeo'

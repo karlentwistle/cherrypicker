@@ -29,7 +29,7 @@ module Cherrypicker
     end
   
     def download
-      Download.new(@hostname + remote_url, :location => @location, :size => @size, :filename =>  @filename)
+      Cherrypicker::download_file(@hostname + remote_url, :location => @location, :size => @size, :filename =>  @filename)
     end
   
     def fileid
