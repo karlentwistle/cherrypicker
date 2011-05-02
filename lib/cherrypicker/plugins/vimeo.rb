@@ -39,13 +39,13 @@ module Cherrypicker
   	    download_url = ":#{vimeo_id}/#{request_signature}/#{request_signature_expires}/?q=hd"
       end
     
-  		@filename = title.delete("\"'").gsub(/[^0-9A-Za-z]/, '_') + ".flv"
+      @filename = title.delete("\"'").gsub(/[^0-9A-Za-z]/, '_') + ".mp4"
       reply = Cherrypicker::remote_query("#{hostname}#{download_url}")
   		@download_url = reply.response['location']
     end
   
     def download
-      Cherrypicker::download_file(@download_url, :location => @location)
+      Cherrypicker::download_file(@download_url, :location => @location, :filename => @filename)
     end
   end
 end
