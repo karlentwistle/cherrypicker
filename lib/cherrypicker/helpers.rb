@@ -62,6 +62,8 @@ module Cherrypicker
     end
     
     puts "unknown file size for #{@filename} but downloading..." if @size.nil?
+    puts @link.to_s
+    
     http.request(request) do |response|
       bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i) unless @size.nil?
       bar.format_arguments=[:title, :percentage, :bar, :stat_for_file_transfer] unless @size.nil?
