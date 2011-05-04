@@ -58,17 +58,10 @@ module Cherrypicker
   		format_ext["5"] = ["flv", "old default?"]
 
       download_url = video_info_hash["fmt_url_map"][formats.first]
-  		@filename = video_info_hash["title"].delete("\"'").gsub(/[^0-9A-Za-z]/, '_') + "." + format_ext[formats.first].first
+  		@filename = video_info_hash["title"].delete("\"'").gsub(/[^0-9A-Za-z]/, '_') + "." + format_ext[formats.first].first		
+  		@download_url = download_url
+  	end
   		
-  		#there might be a redirect let check
-  		reply = Cherrypicker::remote_query("#{download_url}")
-  		if reply.response['location']
-  		  @download_url = reply.response['location']
-  		else
-  		  @download_url = download_url
-  		end
-    end
-  
     def download
       Cherrypicker::download_file(@download_url, :location => @location, :filename  => @filename)
     end

@@ -46,8 +46,11 @@ module Cherrypicker
     uri = URI.parse(@link.to_s)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == "https"
+    http.open_timeout = 3 # seconds
+    http.read_timeout = 3 # seconds
     request = Net::HTTP::Get.new(uri.request_uri)
     request.initialize_http_header({"User-Agent" => Cherrypicker::random_agent})
+    
     unless (uri.host.include? 'youtube.com') && (uri.request_uri.include? 'videoplayback') #youtube throws EOFError
       head = http.request_head(URI.escape(uri.path))
     case head
@@ -57,7 +60,8 @@ module Cherrypicker
         @size = head['content-length'] if @size.nil? && head['content-length'].to_i > 1024
       end
     end
-    puts "unknown file size for #{@filename}" if @size.nil?
+    
+    puts "unknown file size for #{@filename} but downloading..." if @size.nil?
     http.request(request) do |response|
       bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i) unless @size.nil?
       bar.format_arguments=[:title, :percentage, :bar, :stat_for_file_transfer] unless @size.nil?
@@ -70,6 +74,7 @@ module Cherrypicker
         end
       end
     end
+    
     @finished = true
     puts
     puts "download completed"
