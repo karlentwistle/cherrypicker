@@ -40,6 +40,8 @@ module Cherrypicker
       end
     
       @filename = title.delete("\"'").gsub(/[^0-9A-Za-z]/, '_') + ".mp4"
+      #strip out _quote_ marks
+      @filename.gsub!('_quot_', '')
       reply = Cherrypicker::remote_query("#{hostname}#{download_url}")
   		@download_url = reply.response['location']
     end
