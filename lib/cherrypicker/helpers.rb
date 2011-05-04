@@ -9,6 +9,7 @@ require 'net/http'
 require 'net/https'
 require 'progressbar'
 require 'open-uri'
+require 'progress'
 
 module Cherrypicker
   def self.remote_query(url)  
@@ -56,8 +57,11 @@ module Cherrypicker
         @size = head['content-length'] if @size.nil? && head['content-length'].to_i > 1024
       end
     end
+    puts "unknown file size for #{@filename}" if @size.nil?
     http.request(request) do |response|
       bar = ProgressBar.new((@filename ||= File.basename(uri.path)), @size.to_i) unless @size.nil?
+      bar.format_arguments=[:title, :percentage, :bar, :stat_for_file_transfer] unless @size.nil?
+            
       File.open(@location + (@filename ||= File.basename(uri.path)), "wb") do |file|
         response.read_body do |segment|
           @progress += segment.length
@@ -67,6 +71,9 @@ module Cherrypicker
       end
     end
     @finished = true
+    puts
+    puts "download completed"
+    puts
   end
 
   def self.hash_to_url(hash)
