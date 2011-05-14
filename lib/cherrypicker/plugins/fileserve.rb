@@ -8,6 +8,10 @@ require 'open-uri'
 module Cherrypicker
   class Fileserve
     attr_accessor :link, :filename, :location, :download_url
+    
+    def self.matches_provider?(url)
+      url.include?("fileserve.com")
+    end
 
     def initialize(link, opts={})
     

@@ -16,7 +16,11 @@ module Cherrypicker
       @password     = o[:password]
       @directory    = o[:location]
       
-      plugins = ["Hotfile", "Megavideo", "Rapidshare", "Rghost", "Vimeo", "Youtube"]
+      Dir[File.join(File.dirname(__FILE__),"../plugins/*.rb")].each do |plugin|
+      	load plugin
+      end
+      
+      plugins = ["Hotfile", "Megavideo", "Rapidshare", "Rghost", "Vimeo", "Youtube", "Googlevideo"]
       classname = URI.parse(@link.to_s).host[/[^www\.]+/].capitalize
       
       supported_host = plugins.include?(classname)

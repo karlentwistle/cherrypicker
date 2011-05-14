@@ -3,8 +3,12 @@
 require 'open-uri'
 
 module Cherrypicker
-  class Rghost
+  class Rghost < PluginBase
     attr_accessor :link, :filename, :location, :download_url
+    
+    def self.matches_provider?(url)
+      url.include?("rghost.com")
+    end
 
     def initialize(link, opts={})
     

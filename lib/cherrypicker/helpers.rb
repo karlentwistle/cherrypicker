@@ -12,6 +12,15 @@ require 'open-uri'
 require 'cgi'
 
 module Cherrypicker
+  class PluginBase
+    class << self; attr_reader :registered_plugins end
+      @registered_plugins = []
+
+    def self.inherited(child)
+      PluginBase.registered_plugins << child
+    end
+  end
+  
   def self.remote_query(url)  
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)

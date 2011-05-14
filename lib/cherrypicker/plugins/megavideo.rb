@@ -3,8 +3,12 @@
 
 require 'open-uri'
 module Cherrypicker
-  class Megavideo
+  class Megavideo < PluginBase
     attr_accessor :link, :filename, :location, :download_url
+    
+    def self.matches_provider?(url)
+      url.include?("megavideo.com")
+    end
 
     def initialize(link, opts={})
       o = {

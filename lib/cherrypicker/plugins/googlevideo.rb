@@ -3,8 +3,12 @@
 require 'cgi'
 
 module Cherrypicker
-  class Googlevideo
+  class Googlevideo < PluginBase
     attr_accessor :link, :filename, :location, :download_url
+    
+    def self.matches_provider?(url)
+      url.include?("video.google.com")
+    end
 
     def initialize(link, opts={})
     
@@ -18,7 +22,7 @@ module Cherrypicker
       @download_url = ""
       
       response = Cherrypicker::remote_query(@link)      
-      @filename = response.body[/<title>(.*)<\/title>/, 1]
+      @filename = response.body[/<title>(.*)<\/title>/, 1] + ".flv"
       @download_url = CGI.unescape(response.body[/videoUrl\\x3d(.*)\\x26thumbnailUrl/, 1])
     end
       

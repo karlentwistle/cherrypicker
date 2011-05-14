@@ -9,8 +9,12 @@
 #               you know, for videos
 #-->
 module Cherrypicker
-  class Vimeo
+  class Vimeo < PluginBase
     attr_accessor :link, :filename, :location, :download_url
+    
+    def self.matches_provider?(url)
+      url.include?("vimeo.com")
+    end
 
     def initialize(link, opts={})
     

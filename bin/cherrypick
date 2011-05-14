@@ -55,7 +55,9 @@ username = nil unless username != ""
 password = nil unless password != ""
 directory = nil unless directory != ""
 
-if ARGV[0].include?("rapidshare.com/files/") or ARGV[0].include?("hotfile.com/dl/")
+url = ARGV[0]
+
+if url.include?("rapidshare.com/files/") or url.include?("hotfile.com/dl/")
   unless username and password != nil?
     puts "Host required username / password" 
     puts 
@@ -64,4 +66,13 @@ if ARGV[0].include?("rapidshare.com/files/") or ARGV[0].include?("hotfile.com/dl
   end
 end
 
-Cherrypicker::Cherrypick.new(ARGV[0], :location => directory, :username => username, :password => password)
+#Cherrypicker::Cherrypick.new(ARGV[0], :location => directory, :username => username, :password => password)
+
+Cherrypicker::PluginBase.registered_plugins.each do |plugin|
+	if plugin.matches_provider?(url)
+		plugin.new(url, :location => directory, :username => username, :password => password).download
+		exit
+	end
+end
+
+Cherrypicker::download_file(url, :location => directory, :username => username, :password => password)

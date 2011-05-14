@@ -3,8 +3,12 @@
 require 'cgi'
 
 module Cherrypicker
-  class Youtube
+  class Youtube < PluginBase
     attr_accessor :link, :filename, :location, :download_url
+    
+    def self.matches_provider?(url)
+      url.include?("youtube.com")
+    end
 
     def initialize(link, opts={})
     

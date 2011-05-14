@@ -4,8 +4,12 @@
 # rapid.download
 require 'open-uri'
 module Cherrypicker
-  class Rapidshare
+  class Rapidshare < PluginBase
     attr_accessor :link, :fileid, :filename, :hostname, :username, :password, :size, :location, :download_url
+  
+    def self.matches_provider?(url)
+      url.include?("rapidshare.com")
+    end
   
     def initialize(link, opts={})
       uri = URI.parse(link)

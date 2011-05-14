@@ -5,8 +5,12 @@
 
 require 'open-uri'
 module Cherrypicker
-  class Hotfile
+  class Hotfile < PluginBase
     attr_accessor :link, :hostname, :filename, :username, :password, :size, :location, :query
+  
+    def self.matches_provider?(url)
+      url.include?("hotfile.com")
+    end
   
     def initialize(link, opts={})
       if link =~ /hotfile.com\/dl\/\d*\/[0-9a-f]*\/.*.*\.html/
