@@ -3,6 +3,7 @@
 
 require 'rubygems'
 require 'mechanize'
+require 'open-uri'
 
 module Cherrypicker
   class Fileserve
@@ -24,19 +25,18 @@ module Cherrypicker
       hostname = "http://www.fileserve.com/file/JmcsvYZ/Thor.2011.TS.READNFO.XViD-IMAGiNE.avi"
     
       a = Mechanize.new { |agent|
-         agent.user_agent_alias = Cherrypicker::self.random_agent
+         agent.user_agent_alias = 'Mac Safari'
          agent.follow_meta_refresh = true
-      }
-      
-      
-      a.get(hostname) do |page|
-        download_page = page.form_with(:name => 'loginForm') do |login|
-        login.loginUserName = o[:username]
-        login.loginUserPassword = o[:password
-        end.submit
-
-        puts a
-      end
+         page = agent.get('http://www.fileserve.com/login.php')
+             
+         form = signin_page.form_with(:name => 'login_form') do |form|
+           form.loginUserName = o[:username]
+           form.loginUserPassword = o[:password]
+         end.submit  
+         
+         page = agent.get('http://www.fileserve.com/login.php')
+        }
+        
       
   		#@download_url = reply.response['location']
     end
@@ -44,5 +44,6 @@ module Cherrypicker
     def download
      # Cherrypicker::download_file(@download_url, :location => @location, :filename => @filename)
     end
-  end
+  end  
 end
+

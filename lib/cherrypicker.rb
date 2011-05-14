@@ -7,3 +7,5 @@ require 'cherrypicker/plugins/hotfile'
 require 'cherrypicker/plugins/youtube'
 require 'cherrypicker/plugins/megavideo'
 require "cherrypicker/plugins/rghost"
+require "cherrypicker/plugins/fileserve"
+require "cherrypicker/plugins/googlevideo"

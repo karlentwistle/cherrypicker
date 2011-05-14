@@ -75,6 +75,17 @@ Limitations
 License
 -------
 
-	Cherypicker is free software, and may be redistributed and be used for 
-	anything apart from the operation of nuclear facilities, aircraft navigation 
-	or communication systems, air traffic control, life support or weapons systems.
+	Ruby Gem that lets you download from; Rapidshare, Hotfile, Youtube, Vimeo & Megavideo
+	Copyright (C) 2011  Karl Entwistle
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, version 2 of the License.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.

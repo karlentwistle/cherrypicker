@@ -44,11 +44,10 @@ end
 
 unless directory == "" || nil?
   p path = Pathname.new(directory) 
-
-  if not path.directory?
-        puts "Directory not found " + path.to_s
-        usage 
-        exit
+  if not path.directory?    
+    puts "Directory not found " + path.to_s
+    usage 
+    exit
   end
 end
 

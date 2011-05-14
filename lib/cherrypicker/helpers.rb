@@ -9,6 +9,7 @@ require 'net/http'
 require 'net/https'
 require 'progressbar'
 require 'open-uri'
+require 'cgi'
 
 module Cherrypicker
   def self.remote_query(url)  
@@ -49,15 +50,13 @@ module Cherrypicker
     http.read_timeout = 3 # seconds
     request = Net::HTTP::Get.new(uri.request_uri)
     request.initialize_http_header({"User-Agent" => Cherrypicker::random_agent})
-    
-    unless (uri.host.include? 'youtube.com') && (uri.request_uri.include? 'videoplayback') #youtube throws EOFError
-      head = http.request_head(URI.escape(uri.path))
+
+    head = http.request_head(URI.escape(uri.request_uri))
     case head
-      when Net::HTTPForbidden
-        @size = nil  #no content-length no progress bar
-      else
-        @size = head['content-length'] if @size.nil? && head['content-length'].to_i > 1024
-      end
+    when Net::HTTPForbidden
+      @size = nil  #no content-length no progress bar
+    else
+      @size = head['content-length'] if @size.nil? && head['content-length'].to_i > 1024
     end
     
     puts "unknown file size for #{@filename} but downloading..." if @size.nil?
